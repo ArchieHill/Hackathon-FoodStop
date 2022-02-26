@@ -1,5 +1,5 @@
 window.onload = (function() {
-	fetch('/api/food')
+	fetch('/api/available')
 		.then(res => res.json())
 		.then(showData);
 });
