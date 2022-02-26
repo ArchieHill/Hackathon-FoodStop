@@ -4,7 +4,7 @@ const express = require("express");
 
 const app = express();
 
-app.get("/api/food", (req, res) => {
+app.get("/api/available", (req, res) => {
 	const data = [];
 	for(let i = 1; i <= 3; i++)
 		data.push({

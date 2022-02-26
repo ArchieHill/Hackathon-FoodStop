@@ -11,6 +11,8 @@
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
   <title>Food Stop</title>
+
+  <script src="customer.js" type="text/javascript"></script>
 </head>
 
 <body>
@@ -28,10 +30,20 @@
 
         <div class="col">
           <div class="card">
-            <div class="card-header">Customer</div>
+            <div class="card-header">Available food locations</div>
 
             <div class="card-body">
-              <p>For those who are on hard times and are looking for cheap food that is about to be wasted.</p>
+              <table id="food-table" class="table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Quantity</th>
+                    <th>Location</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
