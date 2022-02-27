@@ -23,7 +23,8 @@ function showData(data) {
     i.className = "col-md-6";
     i.value = data.name;
     i.name = "name";
-    
+    i.setAttribute("required", true);
+  
     formRow4.append(l);
     formRow4.append(i);
 
@@ -38,6 +39,8 @@ function showData(data) {
     i.className = "col-md-6";
     i.value = data.quantity;
     i.name = "quantity";
+    i.setAttribute("type", "number");
+    i.setAttribute("min", "0");
     
     formRow.append(l);
     formRow.append(i);
@@ -53,7 +56,8 @@ function showData(data) {
     p.className = "col-md-6";
     p.value = data.address;
     p.name = "address";
-    
+    p.setAttribute("required", true);
+  
     formRow2.append(l);
     formRow2.append(p);
 
