@@ -67,7 +67,7 @@ function showData(data) {
     p = document.createElement("input");
     p.className = "col-md-6";
     p.value = (data.location.long).toFixed(2);
-    p.name = "lat";
+    p.name = "long";
 
     formRow3.append(l);
     formRow3.append(p);
