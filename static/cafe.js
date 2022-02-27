@@ -22,6 +22,7 @@ function showData(data) {
     i = document.createElement("input");
     i.className = "col-md-6";
     i.value = data.name;
+    i.name = "name";
     
     formRow4.append(l);
     formRow4.append(i);
@@ -36,6 +37,7 @@ function showData(data) {
     i = document.createElement("input");
     i.className = "col-md-6";
     i.value = data.quantity;
+    i.name = "quantity";
     
     formRow.append(l);
     formRow.append(i);
@@ -50,6 +52,7 @@ function showData(data) {
     p = document.createElement("input");
     p.className = "col-md-6";
     p.value = (data.location.lat).toFixed(2);
+    p.name = "lat";
     
     formRow2.append(l);
     formRow2.append(p);
@@ -64,6 +67,7 @@ function showData(data) {
     p = document.createElement("input");
     p.className = "col-md-6";
     p.value = (data.location.long).toFixed(2);
+    p.name = "long";
 
     formRow3.append(l);
     formRow3.append(p);
