@@ -8,14 +8,23 @@ function showData(data) {
     const cardBody = document.querySelector("#cardbody");
     cardBody.innerHTML="";
 
-    p = document.createElement("p");
-    p.className = "card-title text-white";
-    p.innerHTML = data.name;
-    cardBody.append(p);
-
     form = document.createElement("form");
     form.method = "POST";
     form.action = "/api/available/me";
+
+    formRow4 = document.createElement("div");
+    formRow4.className = "form-row";
+
+    l = document.createElement("label");
+    l.innerHTML = "Name";
+    l.className = "col-md-4 col-form-label text-md-right text-white";
+
+    i = document.createElement("input");
+    i.className = "col-md-6";
+    i.value = data.name;
+    
+    formRow4.append(l);
+    formRow4.append(i);
 
     formRow = document.createElement("div");
     formRow.className = "form-row";
@@ -64,6 +73,7 @@ function showData(data) {
     b.type = "submit";
     b.className = "btn btn-primary";
 
+    form.append(formRow4);
     form.append(formRow);
     form.append(formRow2);
     form.append(formRow3);
