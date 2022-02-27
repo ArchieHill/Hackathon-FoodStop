@@ -46,31 +46,16 @@ function showData(data) {
     formRow2.className = "form-row";
 
     l = document.createElement("label");
-    l.innerHTML = "Restaurant Latitude";
+    l.innerHTML = "Restaurant Address";
     l.className = "col-md-4 col-form-label text-md-right text-white";
 
     p = document.createElement("input");
     p.className = "col-md-6";
-    p.value = (data.location.lat).toFixed(2);
-    p.name = "lat";
+    p.value = data.address;
+    p.name = "address";
     
     formRow2.append(l);
     formRow2.append(p);
-
-    formRow3 = document.createElement("div");
-    formRow3.className = "form-row";
-
-    l = document.createElement("label");
-    l.innerHTML = "Restaurant Longitude";
-    l.className = "col-md-4 col-form-label text-md-right text-white";
-
-    p = document.createElement("input");
-    p.className = "col-md-6";
-    p.value = (data.location.long).toFixed(2);
-    p.name = "long";
-
-    formRow3.append(l);
-    formRow3.append(p);
 
     b = document.createElement("button");
     b.innerHTML = "Change Details";
@@ -80,7 +65,6 @@ function showData(data) {
     form.append(formRow4);
     form.append(formRow);
     form.append(formRow2);
-    form.append(formRow3);
     form.append(b);
 
     cardBody.append(form);

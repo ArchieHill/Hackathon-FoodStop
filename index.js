@@ -9,6 +9,8 @@ const app = express();
 
 const LocalStrategy = require("passport-local").Strategy;
 
+const cafes = new Map();
+
 app.use(session({
 	secret: SECRET,
 	resave: false,
@@ -35,19 +37,13 @@ app.post("/login", passport.authenticate("local", {
 
 app.get("/api/available", (req, res) => {
 	const data = [];
-	for(let i = 1; i <= 3; i++)
+	cafes.forEach((cafe, email) => {
 		data.push({
-			name: `Cafe ${i}`,
-			quantity: Math.round(Math.random() * 20),
-			location: { lat: Math.random() * 100, long: Math.random() * 100 }
-			
+			name: cafe.name,
+			quantity: cafe.quantity,
+			address: cafe.address
 		});
-		for(let i = 1; i <= 3; i++)
-		data.push({
-			name: `Restaurant ${i}`,
-			quantity: Math.round(Math.random() * 20),
-			location: { lat: Math.random() * 100, long: Math.random() * 100 }
-		});
+	})
 	res.json(data);
 });
 
@@ -66,29 +62,21 @@ app.get("/api/available/me", (req, res) => {
 	res.json({
 		name: req.user.name,
 		quantity: req.user.quantity,
-		location: req.user.location
+		address: req.user.address
 	});
 })
 app.post("/api/available/me", (req, res) => {
-	let { name, quantity, lat, long } = req.body;
+	let { name, quantity, address } = req.body;
 	name = name.trim();
 	const q = parseInt(quantity);
-	const latNum = parseFloat(lat);
-	const longNum = parseFloat(long);
-	if(name == "" || isNaN(q) || q < 0 || isNaN(lat) || isNaN(long))
+	address = address.trim();
+	if(name == "" || isNaN(q) || q < 0 || address == "")
 		return res.sendStatus(400);
 	req.user.name = name;
 	req.user.quantity = q;
-	req.user.location.lat = latNum;
-	req.user.location.long = longNum;
-	res.json({
-		name,
-		quantity: q,
-		location: {
-			lat: latNum,
-			long: longNum
-		}
-	});
+	req.user.address = address;
+	cafes.set(req.user.email, req.user);
+	res.redirect("/cafe.html");
 });
 
 app.use(express.static("./static"));
@@ -105,7 +93,8 @@ function authUser(req, email, password, done) {
 		email,
 		name: `${email}'s Cafe`,
 		quantity: Math.round(Math.random() * 20),
-		location: { lat: Math.random() * 100, long: Math.random() * 100 }
+		address: "-"
 	};
+	cafes.set(email, authedUser);
 	return done(null, authedUser);
 }

@@ -22,8 +22,7 @@ function createFoodRow(place) {
 	q.innerHTML = place.quantity;
 	r.append(q);
 	const l = document.createElement("td");
-	const { lat, long } = place.location;
-	l.innerHTML = `${Math.round(lat)}, ${Math.round(long)}`;
+	l.innerHTML = place.address;
 	r.append(l);
 
 	return r;
