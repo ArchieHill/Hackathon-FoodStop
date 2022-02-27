@@ -50,21 +50,47 @@ app.get("/api/available", (req, res) => {
 		});
 	res.json(data);
 });
+
 app.use("/cafe.html", (req, res, next) => {
 	if(!req.isAuthenticated())
 		return res.redirect("/cafeLogin.html");
 	next();
 });
-app.get("/api/available/me", (req, res) => {
+
+app.use("/api/available/me", (req, res, next) => {
 	if(!req.isAuthenticated())
 		return res.sendStatus(401);
-	const data = {
+	next();
+})
+app.get("/api/available/me", (req, res) => {
+	res.json({
 		name: req.user.name,
 		quantity: req.user.quantity,
 		location: req.user.location
-	};
-	res.json(data);
+	});
 })
+app.post("/api/available/me", (req, res) => {
+	let { name, quantity, lat, long } = req.body;
+	name = name.trim();
+	const q = parseInt(quantity);
+	const latNum = parseFloat(lat);
+	const longNum = parseFloat(long);
+	if(name == "" || isNaN(q) || q < 0 || isNaN(lat) || isNaN(long))
+		return res.sendStatus(400);
+	req.user.name = name;
+	req.user.quantity = q;
+	req.user.location.lat = latNum;
+	req.user.location.long = longNum;
+	res.json({
+		name,
+		quantity: q,
+		location: {
+			lat: latNum,
+			long: longNum
+		}
+	});
+});
+
 app.use(express.static("./static"));
 
 app.listen(PORT);
