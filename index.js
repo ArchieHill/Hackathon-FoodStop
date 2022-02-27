@@ -50,16 +50,36 @@ app.get("/api/available", (req, res) => {
 		});
 	res.json(data);
 });
+app.use("/cafe.html", (req, res, next) => {
+	if(!req.isAuthenticated())
+		return res.redirect("/cafeLogin.html");
+	next();
+});
+app.get("/api/available/me", (req, res) => {
+	if(!req.isAuthenticated())
+		return res.sendStatus(401);
+	const data = {
+		name: req.user.name,
+		quantity: req.user.quantity,
+		location: req.user.location
+	};
+	res.json(data);
+})
 app.use(express.static("./static"));
 
 app.listen(PORT);
 
 console.log(`Running on port ${PORT}`);
 
-function authUser(req, user, password, done) {
+function authUser(req, email, password, done) {
 	if(password != "Password")
 		return done(null, false);
 
-	const authedUser = { id: 123, name: user };
+	const authedUser = {
+		email,
+		name: `${email}'s Cafe`,
+		quantity: Math.round(Math.random() * 20),
+		location: { lat: Math.random() * 100, long: Math.random() * 100 }
+	};
 	return done(null, authedUser);
 }
